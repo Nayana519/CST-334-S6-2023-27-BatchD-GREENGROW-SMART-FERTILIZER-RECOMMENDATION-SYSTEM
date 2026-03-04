@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Prediction History - GreenGrow</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --gd: #1a3a0a;
+        --gm: #2d6a0f;
+        --gb: #4da528;
+        --gl: #a8d870;
+        --gp: #e8f5d0;
+        --cr: #f7f9f0;
+        --td: #111a08;
+        --tm: #5a6b4a;
+        --sh: 0 20px 60px rgba(26, 58, 10, 0.15);
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "DM Sans", sans-serif;
+        background: var(--cr);
+        min-height: 100vh;
+        background-image: url("/static/rain.webp");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
+        background-size: cover;
+      }
+
+      /* NAVBAR */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 40px;
+        background: rgba(247, 249, 240, 0.97);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid rgba(77, 165, 40, 0.15);
+      }
+      .nav-logo {
+        font-family: "Playfair Display", serif;
+        font-size: 1.4rem;
+        font-weight: 900;
+        color: var(--gd);
+        text-decoration: none;
+      }
+      .nav-right {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+      }
+      .nav-right a {
+        color: var(--tm);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.2s;
+      }
+      .nav-right a:hover {
+        color: var(--gb);
+      }
+
+      /* PAGE */
+      .page {
+        padding: 110px 20px 60px;
+        min-height: 100vh;
+      }
+
+      .content-wrap {
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        animation: fadeUp 0.6s ease both;
+      }
+
+      .page-header h1 {
+        font-family: "Playfair Display", serif;
+        font-size: 2.4rem;
+        font-weight: 900;
+        color: var(--gd);
+        margin-bottom: 8px;
+      }
+
+      .page-header p {
+        color: var(--tm);
+        font-size: 1rem;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(25px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* EMPTY STATE */
+      .empty-state {
+        background: white;
+        border-radius: 20px;
+        padding: 60px 40px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(26, 58, 10, 0.08);
+        border: 1px solid rgba(77, 165, 40, 0.12);
+      }
+
+      .empty-state-icon {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+      }
+
+      .empty-state h2 {
+        font-size: 1.4rem;
+        color: var(--gd);
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .empty-state p {
+        color: var(--tm);
+        margin-bottom: 30px;
+        font-size: 0.95rem;
+      }
+
+      .btn-primary {
+        display: inline-block;
+        padding: 12px 28px;
+        background: linear-gradient(135deg, var(--gm) 0%, var(--gb) 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 100px;
+        font-weight: 600;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        font-size: 0.9rem;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(77, 165, 40, 0.3);
+      }
+
+      /* HISTORY TABLE */
+      .history-table-wrap {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(26, 58, 10, 0.08);
+        border: 1px solid rgba(77, 165, 40, 0.12);
+        animation: fadeUp 0.6s ease both;
+      }
+
+      .history-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .history-table thead {
+        background: linear-gradient(135deg, var(--gd) 0%, var(--gm) 100%);
+        color: white;
+      }
+
+      .history-table th {
+        padding: 18px;
+        text-align: left;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .history-table td {
+        padding: 16px 18px;
+        border-bottom: 1px solid var(--gp);
+        font-size: 0.92rem;
+      }
+
+      .history-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .history-table tbody tr {
+        transition: background-color 0.2s;
+      }
+
+      .history-table tbody tr:hover {
+        background-color: var(--gp);
+      }
+
+      .fert-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--gl), var(--gb));
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+      }
+
+      .crop-badge {
+        display: inline-block;
+        background: rgba(77, 165, 40, 0.1);
+        color: var(--gb);
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+
+      .date-text {
+        color: var(--tm);
+        font-size: 0.85rem;
+      }
+
+      .npk-values {
+        font-size: 0.85rem;
+        color: var(--td);
+        font-family: monospace;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 12px 20px;
+        }
+
+        .nav-logo {
+          font-size: 1rem;
+        }
+
+        .page {
+          padding: 90px 12px 40px;
+        }
+
+        .page-header h1 {
+          font-size: 1.8rem;
+        }
+
+        .nav-right {
+          gap: 10px;
+          font-size: 0.85rem;
+        }
+
+        .history-table th,
+        .history-table td {
+          padding: 12px 10px;
+          font-size: 0.8rem;
+        }
+
+        .history-table {
+          font-size: 0.8rem;
+        }
+
+        .empty-state {
+          padding: 40px 20px;
+        }
+
+        .empty-state h2 {
+          font-size: 1.2rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-header h1 {
+          font-size: 1.4rem;
+        }
+
+        .history-table-wrap {
+          border-radius: 12px;
+        }
+
+        .history-table th,
+        .history-table td {
+          padding: 10px 8px;
+          font-size: 0.75rem;
+        }
+
+        .fert-badge,
+        .crop-badge {
+          font-size: 0.75rem;
+          padding: 4px 8px;
+        }
+
+        .empty-state-icon {
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <a class="nav-logo" href="/">🌿 GREENGROW</a>
+      <div class="nav-right">
+        <a href="/profile">👤 Profile</a>
+        <a href="/predict-page">New Prediction</a>
+        <a href="/logout">Logout</a>
+      </div>
+    </nav>
+
+    <div class="page">
+      <div class="content-wrap">
+        <div class="page-header">
+          <h1>📊 Prediction History</h1>
+          <p>View all your past fertilizer predictions</p>
+        </div>
+
+        {% if predictions %}
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Crop</th>
+                <th>Fertilizer</th>
+                <th>NPK Values</th>
+                <th>pH</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pred in predictions %}
+              <tr>
+                <td>
+                  <div class="date-text">
+                    {{ pred.created_at.strftime('%Y-%m-%d %H:%M') if
+                    pred.created_at else 'Recently' }}
+                  </div>
+                </td>
+                <td>
+                  <span class="crop-badge">{{ pred.crop }}</span>
+                </td>
+                <td>
+                  <span class="fert-badge"
+                    >🌱 {{ pred.fertilizer_result }}</span
+                  >
+                </td>
+                <td>
+                  <div class="npk-values">
+                    N: {{ "%.1f"|format(pred.nitrogen) }} | P: {{
+                    "%.1f"|format(pred.phosphorus) }} | K: {{
+                    "%.1f"|format(pred.potassium) }}
+                  </div>
+                </td>
+                <td>{{ "%.1f"|format(pred.ph) }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+          <div class="empty-state-icon">📋</div>
+          <h2>No Predictions Yet</h2>
+          <p>
+            You haven't made any fertilizer predictions yet. Start by making
+            your first prediction!
+          </p>
+          <a href="/predict-page" class="btn-primary"
+            >Make Your First Prediction →</a
+          >
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </body>
+</html>

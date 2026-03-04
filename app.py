@@ -164,6 +164,72 @@ def get_weather(city):
         print(f"[ERROR] Weather API failed: {e}")
         return 25.0, 50.0, "Weather Unavailable"
 
+# Fertilizer NPK composition (% by weight)
+FERT_NPK_COMPOSITION = {
+    'Urea':     {'N': 46, 'P': 0, 'K': 0},
+    'DAP':      {'N': 18, 'P': 46, 'K': 0},
+    '14-35-14': {'N': 14, 'P': 35, 'K': 14},
+    '17-17-17': {'N': 17, 'P': 17, 'K': 17},
+    '20-20':    {'N': 20, 'P': 0, 'K': 20},
+    '28-28':    {'N': 28, 'P': 0, 'K': 28},
+    '10-26-26': {'N': 10, 'P': 26, 'K': 26},
+}
+
+def calculate_fertilizer_quantity(fertilizer_name, def_n, def_p, def_k):
+    """
+    Calculate recommended fertilizer quantity based on actual NPK deficits.
+    
+    Args:
+        fertilizer_name: Name of the selected fertilizer
+        def_n: Nitrogen deficit (kg/ha)
+        def_p: Phosphorus deficit (kg/ha)
+        def_k: Potassium deficit (kg/ha)
+    
+    Returns:
+        Quantity in kg/ha as a rounded value
+    """
+    try:
+        # Get fertilizer composition
+        if fertilizer_name not in FERT_NPK_COMPOSITION:
+            # Default if fertilizer not found
+            return 100
+        
+        fert = FERT_NPK_COMPOSITION[fertilizer_name]
+        n_pct = fert['N']
+        p_pct = fert['P']
+        k_pct = fert['K']
+        
+        # Calculate required fertilizer amount for each nutrient
+        required_amounts = []
+        
+        if n_pct > 0 and def_n > 0:
+            required_amounts.append(def_n / (n_pct / 100))
+        if p_pct > 0 and def_p > 0:
+            required_amounts.append(def_p / (p_pct / 100))
+        if k_pct > 0 and def_k > 0:
+            required_amounts.append(def_k / (k_pct / 100))
+        
+        # Use the maximum required amount (ensures all nutrients are covered)
+        if required_amounts:
+            quantity = max(required_amounts)
+        else:
+            # If no nutrients in fertilizer match deficit, use baseline
+            quantity = 100
+        
+        # Add 10% buffer for application efficiency
+        quantity = quantity * 1.1
+        
+        # Round to nearest 5 kg/ha for practical use
+        return round(quantity / 5) * 5
+    
+    except Exception as e:
+        print(f"[ERROR] Error calculating fertilizer quantity: {e}")
+        return 100
+
+    except (ValueError, TypeError):
+        # Default: 100 kg if size can't be parsed
+        return 100
+
 # -------------------------------
 # 4. ROUTES
 # -------------------------------
@@ -385,6 +451,9 @@ def predict():
 
         fertilizer_name = le_fert.inverse_transform(prediction)[0] if le_fert else str(prediction[0])
 
+        # Calculate recommended fertilizer quantity in kg/ha based on NPK deficits
+        fert_quantity = calculate_fertilizer_quantity(fertilizer_name, def_n, def_p, def_k)
+
         # Save to DB
         try:
             conn = sqlite3.connect(DB_PATH, timeout=10)
@@ -406,7 +475,8 @@ def predict():
             temp=temp,
             humidity=humidity,
             weather=weather_desc,
-            location=city
+            location=city,
+            fertilizer_quantity=fert_quantity
         )
 
     except Exception as e:

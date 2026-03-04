@@ -478,6 +478,7 @@
       <a class="nav-logo" href="/">🌿 GREENGROW</a>
       <div class="nav-right">
         <a href="/profile">👤 Profile</a>
+        <a href="/history">📊 History</a>
         <a href="/predict-page">New Prediction</a>
         <a href="/logout">Logout</a>
       </div>
@@ -523,14 +524,13 @@
             <div class="stat-lbl">Humidity</div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon">🌤️</div>
-            <div
-              class="stat-val"
-              style="font-size: 1rem; text-transform: capitalize"
-            >
-              {{ weather }}
+            <div class="stat-icon">📦</div>
+            <div class="stat-val">
+              {{ fertilizer_quantity }}<span style="font-size: 0.7rem"
+                >kg/ha</span
+              >
             </div>
-            <div class="stat-lbl">Conditions</div>
+            <div class="stat-lbl">Rec. Quantity</div>
           </div>
         </div>
 
@@ -551,6 +551,12 @@
           <div class="weather-row">
             <span class="wlbl">Fertilizer Recommended</span>
             <span class="wval" style="color: var(--gb)">{{ fertilizer }}</span>
+          </div>
+          <div class="weather-row">
+            <span class="wlbl">Recommended Quantity</span>
+            <span class="wval" style="color: var(--gb); font-weight: 700"
+              >{{ fertilizer_quantity }} kg/ha</span
+            >
           </div>
           <div class="weather-row">
             <span class="wlbl">Weather Conditions</span>

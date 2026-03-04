@@ -1068,12 +1068,12 @@
           />
         </div>
         <div class="sc ca">
-          <div class="sn">95%</div>
-          <div class="sl">Model Accuracy (GB)</div>
+          <div class="sn">High</div>
+          <div class="sl">Model Accuracy</div>
         </div>
         <div class="sc cb">
-          <div class="sn">10K+</div>
-          <div class="sl">Farmers Using GreenGrow</div>
+          <div class="sn">Trusted</div>
+          <div class="sl">by Farmers Using GreenGrow</div>
         </div>
       </div>
       <div class="sh">
@@ -1227,7 +1227,7 @@
       // Check authentication status with server
       async function checkAuthStatus() {
         try {
-          const response = await fetch('/api/auth-status');
+          const response = await fetch("/api/auth-status");
           const data = await response.json();
 
           if (data.authenticated) {
@@ -1252,8 +1252,8 @@
       checkAuthStatus();
 
       function logout() {
-        fetch('/logout').then(() => {
-          location.href = '/';
+        fetch("/logout").then(() => {
+          location.href = "/";
         });
       }
 

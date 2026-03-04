@@ -326,6 +326,7 @@
           >{{ user['name'] }}</span
         >
         <a href="/predict-page" class="nav-btn">Predict</a>
+        <a href="/history" class="nav-btn">History</a>
         <a href="/logout" class="nav-btn btn-logout">Logout</a>
       </div>
     </nav>
@@ -354,48 +355,87 @@
 
             <!-- AVATAR SECTION -->
             <div style="margin-bottom: 32px; text-align: center">
-              <h3 style="color: var(--gd); margin-bottom: 16px; font-size: 1.1rem">Avatar</h3>
-              <div style="
-                width: 120px;
-                height: 120px;
-                border-radius: 50%;
-                background: linear-gradient(135deg, var(--gb), var(--gd));
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin: 0 auto 16px;
-                box-shadow: 0 6px 20px rgba(26, 58, 10, 0.2);
-                overflow: hidden;
-              ">
+              <h3
+                style="color: var(--gd); margin-bottom: 16px; font-size: 1.1rem"
+              >
+                Avatar
+              </h3>
+              <div
+                style="
+                  width: 120px;
+                  height: 120px;
+                  border-radius: 50%;
+                  background: linear-gradient(135deg, var(--gb), var(--gd));
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0 auto 16px;
+                  box-shadow: 0 6px 20px rgba(26, 58, 10, 0.2);
+                  overflow: hidden;
+                "
+              >
                 {% if user.get('avatar_filename') %}
-                  <img src="/static/uploads/avatars/{{ user['avatar_filename'] }}" alt="Avatar" style="width: 100%; height: 100%; object-fit: cover;">
+                <img
+                  src="/static/uploads/avatars/{{ user['avatar_filename'] }}"
+                  alt="Avatar"
+                  style="width: 100%; height: 100%; object-fit: cover"
+                />
                 {% else %}
-                  <span style="font-size: 3rem">{{ user['name'].split()[0][0] if user['name'] else 'U' }}</span>
+                <span style="font-size: 3rem"
+                  >{{ user['name'].split()[0][0] if user['name'] else 'U'
+                  }}</span
+                >
                 {% endif %}
               </div>
 
-              <form action="/profile/upload-avatar" method="POST" enctype="multipart/form-data" style="margin-top: 16px">
+              <form
+                action="/profile/upload-avatar"
+                method="POST"
+                enctype="multipart/form-data"
+                style="margin-top: 16px"
+              >
                 <div style="margin-bottom: 12px">
-                  <input type="file" name="avatar" id="avatar" accept="image/*" required style="
-                    display: none;
-                  ">
-                  <label for="avatar" style="
-                    background: var(--gb);
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-weight: 600;
-                    display: inline-block;
-                    transition: background 0.2s;
-                  " onmouseover="this.style.background='var(--gm)'" onmouseout="this.style.background='var(--gb)'">
+                  <input
+                    type="file"
+                    name="avatar"
+                    id="avatar"
+                    accept="image/*"
+                    required
+                    style="display: none"
+                  />
+                  <label
+                    for="avatar"
+                    style="
+                      background: var(--gb);
+                      color: white;
+                      padding: 10px 20px;
+                      border-radius: 8px;
+                      cursor: pointer;
+                      font-weight: 600;
+                      display: inline-block;
+                      transition: background 0.2s;
+                    "
+                    onmouseover="this.style.background = 'var(--gm)'"
+                    onmouseout="this.style.background = 'var(--gb)'"
+                  >
                     📸 Choose Photo
                   </label>
                 </div>
-                <p style="font-size: 0.78rem; color: var(--tm); margin-bottom: 12px">
+                <p
+                  style="
+                    font-size: 0.78rem;
+                    color: var(--tm);
+                    margin-bottom: 12px;
+                  "
+                >
                   JPG, PNG or GIF (Max 5MB)
                 </p>
-                <button type="submit" class="btn-secondary" style="display: none" id="uploadBtn">
+                <button
+                  type="submit"
+                  class="btn-secondary"
+                  style="display: none"
+                  id="uploadBtn"
+                >
                   Upload
                 </button>
               </form>
@@ -541,37 +581,41 @@
       }
 
       // Handle avatar file input change
-      document.getElementById('avatar').addEventListener('change', function(e) {
-        if (this.files && this.files[0]) {
-          const file = this.files[0];
-          const maxSize = 5 * 1024 * 1024; // 5MB
+      document
+        .getElementById("avatar")
+        .addEventListener("change", function (e) {
+          if (this.files && this.files[0]) {
+            const file = this.files[0];
+            const maxSize = 5 * 1024 * 1024; // 5MB
 
-          if (file.size > maxSize) {
-            alert('File size must be less than 5MB');
-            this.value = '';
-            return;
-          }
-
-          // Show submit button and file name
-          document.getElementById('uploadBtn').style.display = 'inline-block';
-
-          // Show preview
-          const reader = new FileReader();
-          reader.onload = function(e) {
-            const avatar = document.querySelector('[style*="overflow: hidden"]');
-            if (avatar) {
-              const img = document.createElement('img');
-              img.src = e.target.result;
-              img.style.width = '100%';
-              img.style.height = '100%';
-              img.style.objectFit = 'cover';
-              avatar.innerHTML = '';
-              avatar.appendChild(img);
+            if (file.size > maxSize) {
+              alert("File size must be less than 5MB");
+              this.value = "";
+              return;
             }
-          };
-          reader.readAsDataURL(file);
-        }
-      });
+
+            // Show submit button and file name
+            document.getElementById("uploadBtn").style.display = "inline-block";
+
+            // Show preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const avatar = document.querySelector(
+                '[style*="overflow: hidden"]',
+              );
+              if (avatar) {
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.width = "100%";
+                img.style.height = "100%";
+                img.style.objectFit = "cover";
+                avatar.innerHTML = "";
+                avatar.appendChild(img);
+              }
+            };
+            reader.readAsDataURL(file);
+          }
+        });
     </script>
   </body>
 </html>
