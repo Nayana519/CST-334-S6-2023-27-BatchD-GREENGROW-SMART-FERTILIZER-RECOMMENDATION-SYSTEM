@@ -2,17 +2,9 @@ import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split, cross_val_score, StratifiedKFold
-from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import accuracy_score, classification_report, f1_score
-from sklearn.utils.class_weight import compute_sample_weight
 import joblib
-
-try:
-    import xgboost as xgb
-    HAS_XGBOOST = True
-except ImportError:
-    HAS_XGBOOST = False
-    print("[WARNING] XGBoost not installed, using Random Forest")
 
 # ── 1. Load ───────────────────────────────────────────────────────────────────
 print("[INFO] Loading dataset.csv...")
@@ -96,36 +88,28 @@ FEATURE_COLS = [
 X = data[FEATURE_COLS]
 y = data['Fertilizer Name']
 
-# ── 5. Split & scale ──────────────────────────────────────────────────────────
+# ── 5. Split ──────────────────────────────────────────────────────────────────
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-scaler = StandardScaler()
-X_train_s = scaler.fit_transform(X_train)
-X_test_s  = scaler.transform(X_test)
-
 # ── 6. Train ──────────────────────────────────────────────────────────────────
-print("\n[INFO] Training model...")
+print("\n[INFO] Training Random Forest model...")
 
-if HAS_XGBOOST:
-    print("[INFO] Using XGBoost")
-    model = xgb.XGBClassifier(
-        n_estimators=200, max_depth=8, learning_rate=0.1,
-        subsample=0.8, colsample_bytree=0.8,
-        eval_metric='mlogloss', random_state=42, n_jobs=-1
-    )
-else:
-    print("[INFO] Using Random Forest")
-    model = RandomForestClassifier(
-        n_estimators=300, random_state=42, n_jobs=-1
-    )
+model = RandomForestClassifier(
+    n_estimators=300,
+    max_depth=15,
+    min_samples_split=5,
+    min_samples_leaf=2,
+    random_state=42,
+    n_jobs=-1,
+    class_weight='balanced'
+)
 
-sw = compute_sample_weight('balanced', y_train)
-model.fit(X_train_s, y_train, sample_weight=sw)
+model.fit(X_train, y_train)
 
 # ── 7. Evaluate ───────────────────────────────────────────────────────────────
-y_pred   = model.predict(X_test_s)
+y_pred   = model.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 f1_w     = f1_score(y_test, y_pred, average='weighted')
 
@@ -133,7 +117,7 @@ print(f"\n[RESULT] Test Accuracy : {accuracy*100:.2f}%")
 print(f"[RESULT] Weighted F1   : {f1_w:.4f}")
 
 cv_scores = cross_val_score(
-    model, scaler.transform(X), y,
+    model, X, y,
     cv=StratifiedKFold(n_splits=5, shuffle=True, random_state=42),
     scoring='accuracy'
 )
@@ -149,13 +133,12 @@ else:
 
 # ── 8. Save all artifacts ─────────────────────────────────────────────────────
 joblib.dump(model,        "model.pkl")
-joblib.dump(scaler,       "scaler.pkl")
 joblib.dump(le_soil,      "soil_encoder.pkl")
 joblib.dump(le_crop,      "crop_encoder.pkl")
 joblib.dump(le_fert,      "fertilizer_encoder.pkl")
 joblib.dump(OPTIMAL_NPK,  "optimal_npk.pkl")
 joblib.dump(FEATURE_COLS, "feature_cols.pkl")
 
-print("\n[SUCCESS] Saved: model.pkl, scaler.pkl, optimal_npk.pkl, *_encoder.pkl, feature_cols.pkl")
+print("\n[SUCCESS] Saved: model.pkl, optimal_npk.pkl, *_encoder.pkl, feature_cols.pkl")
 print(f"Final Accuracy : {accuracy*100:.2f}%")
 print(f"Weighted F1    : {f1_w:.4f}")

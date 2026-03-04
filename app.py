@@ -139,7 +139,6 @@ model       = joblib.load("model.pkl")              if os.path.exists("model.pkl
 le_soil     = joblib.load("soil_encoder.pkl")       if os.path.exists("soil_encoder.pkl")       else None
 le_crop     = joblib.load("crop_encoder.pkl")       if os.path.exists("crop_encoder.pkl")       else None
 le_fert     = joblib.load("fertilizer_encoder.pkl") if os.path.exists("fertilizer_encoder.pkl") else None
-scaler      = joblib.load("scaler.pkl")             if os.path.exists("scaler.pkl")             else None
 OPTIMAL_NPK = joblib.load("optimal_npk.pkl")        if os.path.exists("optimal_npk.pkl")        else {}
 
 OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_KEY", "f94b34629dd45e28b659165a63fc7595")
@@ -380,9 +379,6 @@ def predict():
             N, K, P, pH,
             def_n, def_p, def_k, total_deficit
         ]])
-
-        if scaler:
-            features = scaler.transform(features)
 
         prediction = model.predict(features)
 
