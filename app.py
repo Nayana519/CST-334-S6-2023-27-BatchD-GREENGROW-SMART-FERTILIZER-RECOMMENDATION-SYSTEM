@@ -238,7 +238,7 @@ def calculate_fertilizer_quantity(fertilizer_name, def_n, def_p, def_k):
 # -------------------------------
 @app.route("/")
 def landing():
-    return "Landing Page Working"
+    return render_template("landing.html")
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
