@@ -991,13 +991,13 @@
       <a class="nav-logo" href="landing.html">🌿 GREENGROW</a>
       <div class="nav-center">
         <a href="landing.html" class="active">Home</a>
-        <a href="http://127.0.0.1:5000/predict-page">Predict</a>
+        <a href="{{ url_for('predict-page') }}">Predict</a>
         <a href="#features">Features</a>
         <a href="#how">How It Works</a>
       </div>
       <div class="nav-right">
-        <a href="http://127.0.0.1:5000/login" class="btn-ol" id="nLB">Login</a>
-        <a href="http://127.0.0.1:5000/register" class="btn-sl" id="nSB"
+        <a href="{{ url_for('login') }}" class="btn-ol" id="nLB">Login</a>
+        <a href="{{ url_for('register') }}" class="btn-sl" id="nSB"
           >Get Started</a
         >
         <div class="pw" id="pW">
@@ -1007,7 +1007,7 @@
               <div class="pn" id="dN">John Farmer</div>
               <div class="pe" id="dE">john@farm.com</div>
             </div>
-            <a href="http://127.0.0.1:5000/predict-page">🌱 New Prediction</a>
+            <a href="{{ url_for('predict-page') }}">🌱 New Prediction</a>
             <a href="#">📊 My History</a>
             <a href="#">⚙️ Settings</a>
             <a class="lo" onclick="logout()">→ Logout</a>
@@ -1036,7 +1036,7 @@
           planet.
         </p>
         <div class="hcta">
-          <a href="http://127.0.0.1:5000/predict-page" class="btn-h"
+          <a href="{{ url_for('predict-page') }}" class="btn-h"
             >🌿 Start Predicting</a
           >
           <a href="#features" class="btn-g">See How It Works</a>
