@@ -31,7 +31,15 @@ app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 
 @app.route("/")
 def home():
-    return redirect(url_for("login"))
+    return render_template("landing.html")
+
+@app.route("/login")
+def login():
+    return render_template("login.html")
+
+@app.route("/register")
+def register():
+    return render_template("register.html")
 
 def init_db():
     try:
