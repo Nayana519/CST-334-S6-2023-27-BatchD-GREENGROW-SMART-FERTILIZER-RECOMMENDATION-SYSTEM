@@ -29,6 +29,10 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.config["MAX_CONTENT_LENGTH"] = MAX_FILE_SIZE
 
+@app.route("/")
+def home():
+    return redirect(url_for("login"))
+
 def init_db():
     try:
         conn = sqlite3.connect(DB_PATH, timeout=5)
