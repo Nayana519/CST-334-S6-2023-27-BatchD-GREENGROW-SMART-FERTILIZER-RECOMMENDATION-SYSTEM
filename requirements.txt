@@ -6,3 +6,4 @@ joblib
 gunicorn
 Pillow
 requests
+python-dotenv

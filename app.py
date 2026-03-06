@@ -5,6 +5,8 @@ import sqlite3
 import joblib
 import requests
 import os
+from dotenv import load_dotenv
+load_dotenv()
 import numpy as np
 import functools
 import uuid
@@ -141,7 +143,7 @@ le_crop     = joblib.load("crop_encoder.pkl")       if os.path.exists("crop_enco
 le_fert     = joblib.load("fertilizer_encoder.pkl") if os.path.exists("fertilizer_encoder.pkl") else None
 OPTIMAL_NPK = joblib.load("optimal_npk.pkl")        if os.path.exists("optimal_npk.pkl")        else {}
 
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_KEY", "f94b34629dd45e28b659165a63fc7595")
+OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_KEY")
 
 # -------------------------------
 # 3. WEATHER FUNCTION
