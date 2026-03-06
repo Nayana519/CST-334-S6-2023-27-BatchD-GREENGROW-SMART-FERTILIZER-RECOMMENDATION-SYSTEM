@@ -485,7 +485,9 @@ def predict():
 # -------------------------------
 # 6. RUN SERVER
 # -------------------------------
+import os
+
 if __name__ == "__main__":
     print("🚀 GreenGrow Server Running...")
-    print("👉 http://127.0.0.1:5000")
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
