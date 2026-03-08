@@ -669,7 +669,10 @@ def predict():
         import traceback
         traceback.print_exc()
         return f"❌ Error: {str(e)}", 500
-
+    
+@app.route("/ping")
+def ping():
+    return "alive"
 
 # -------------------------------
 # 7. RUN SERVER
