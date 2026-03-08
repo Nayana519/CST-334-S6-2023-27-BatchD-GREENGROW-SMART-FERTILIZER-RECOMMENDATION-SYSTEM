@@ -1041,9 +1041,9 @@
   </head>
   <body>
     <nav class="navbar">
-      <a class="nav-logo" href="landing.html">🌿 GREENGROW</a>
+      <a class="nav-logo" href="{{ url_for('home') }}">🌿 GREENGROW</a>
       <div class="nav-center">
-        <a href="landing.html" class="active">Home</a>
+        <a href="{{ url_for('home') }}" class="active">Home</a>
         <a href="{{ url_for('predict_page') }}">Predict</a>
         <a href="#features">Features</a>
         <a href="#how">How It Works</a>
