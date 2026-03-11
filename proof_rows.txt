@@ -1,0 +1,22 @@
+Millets|Clayey|8|19|5|7.29|24.3|76.9|25.6|Jodhpur, Rajasthan|Kribhco NPK 20:20:0|Kribhco NPK 20:20:0|20|20|15|12|1|10|YES
+Millets|Sandy|17|9|3|5.83|38.0|45.4|27.3|Jodhpur, Rajasthan|Tata Paras NPK 10:26:26|Tata Paras NPK 10:26:26|20|20|15|3|11|12|YES
+Ground Nuts|Clayey|9|9|14|6.02|25.1|76.8|61.2|Anantapur, Andhra Pradesh|MAP 28:28:0|DAP (18:46:0)|15|30|15|6|21|1|NO
+Ground Nuts|Black|8|8|11|5.55|32.6|56.8|31.9|Anantapur, Andhra Pradesh|MAP 28:28:0|DAP (18:46:0)|15|30|15|7|22|4|NO
+Oil seeds|Loamy|7|11|13|6.9|37.4|66.4|33.2|Kota, Rajasthan|MAP 28:28:0|DAP (18:46:0)|15|25|15|8|14|2|NO
+Oil seeds|Red|11|7|4|6.15|35.9|75.5|27.2|Kota, Rajasthan|NPK Complex 14:35:14|DAP (18:46:0)|15|25|15|4|18|11|NO
+Paddy|Red|19|15|3|6.45|16.9|40.1|66.4|Thanjavur, Tamil Nadu|Kribhco NPK 20:20:0|Kribhco NPK 20:20:0|35|20|20|16|5|17|YES
+Paddy|Red|27|8|7|7.1|36.2|84.0|24.8|Thanjavur, Tamil Nadu|Tata Paras NPK 10:26:26|Iffco NPK 17:17:17|35|20|20|8|12|13|NO
+Sugarcane|Loamy|12|5|16|7.42|36.8|63.2|54.2|Kolhapur, Maharashtra|DAP (18:46:0)|DAP (18:46:0)|25|30|20|13|25|4|YES
+Sugarcane|Black|8|22|18|5.79|16.0|64.7|36.5|Kolhapur, Maharashtra|Urea (46% N)|Urea (46% N)|25|30|20|17|8|2|YES
+Pulses|Clayey|6|3|8|7.0|29.3|68.5|31.5|Vidisha, Madhya Pradesh|DAP (18:46:0)|DAP (18:46:0)|10|30|10|4|27|2|YES
+Pulses|Black|2|32|8|6.2|15.7|52.1|38.3|Vidisha, Madhya Pradesh|Urea (46% N)|Urea (46% N)|10|30|10|8|0|2|YES
+Barley|Sandy|9|20|11|6.85|29.1|75.0|68.9|Jaipur, Rajasthan|Kribhco NPK 20:20:0|Kribhco NPK 20:20:0|25|25|20|16|5|9|YES
+Barley|Sandy|16|6|19|6.08|20.7|51.3|57.5|Jaipur, Rajasthan|DAP (18:46:0)|DAP (18:46:0)|25|25|20|9|19|1|YES
+Maize|Clayey|20|11|25|5.58|24.9|80.3|52.5|Dharwad, Karnataka|MAP 28:28:0|MAP 28:28:0|35|26|30|15|15|5|YES
+Maize|Clayey|8|23|5|7.27|32.6|53.5|41.3|Dharwad, Karnataka|Kribhco NPK 20:20:0|Kribhco NPK 20:20:0|35|26|30|27|3|25|YES
+Cotton|Sandy|6|11|21|6.28|22.0|59.0|67.9|Amreli, Gujarat|MAP 28:28:0|Urea (46% N)|20|20|20|14|9|0|NO
+Cotton|Sandy|6|8|12|7.01|37.4|46.4|62.3|Amreli, Gujarat|Iffco NPK 17:17:17|MAP 28:28:0|20|20|20|14|12|8|NO
+Wheat|Black|15|20|21|6.09|35.1|52.4|47.8|Ludhiana, Punjab|Urea (46% N)|Urea (46% N)|40|20|20|25|0|0|YES
+Wheat|Loamy|27|2|18|7.39|29.9|81.7|56.2|Ludhiana, Punjab|DAP (18:46:0)|DAP (18:46:0)|40|20|20|13|18|2|YES
+Tobacco|Black|19|11|12|6.05|39.9|57.7|61.1|Guntur, Andhra Pradesh|Iffco NPK 17:17:17|Iffco NPK 17:17:17|30|25|25|11|14|13|YES
+Tobacco|Clayey|21|10|13|7.23|18.1|78.0|36.4|Guntur, Andhra Pradesh|NPK Complex 14:35:14|NPK Complex 14:35:14|30|25|25|9|15|12|YES
